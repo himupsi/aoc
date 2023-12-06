@@ -1,5 +1,18 @@
 import { A, N, S, flow, pipe } from "@mobily/ts-belt";
 
+const answer = flow(
+  S.split("\n"),
+  A.map(
+    flow(
+      S.replaceByRe(/[^0-9]/g, ""),
+      digit => [S.head(digit), S.last(digit)],
+      A.join(""),
+      Number
+    )
+  ),
+  A.reduce(0, N.add)
+);
+
 const input: string = `9dlvndqbddghpxc
 rtkrbtthree8sixfoureight6
 fdxrqmfxdkstpmcj7lmphgsmqqnmjrtwo3tcbc
@@ -1001,18 +1014,4 @@ one5six913lbrcc
 foureightmppchbgz8lqbzqbjztwo7cksqxns
 zvhzgfpkhkone93nine`;
 
-const answer = pipe(
-  input,
-  S.split("\n"),
-  A.map(
-    flow(
-      S.replaceByRe(/[^0-9]/g, ""),
-      digit => [S.head(digit), S.last(digit)],
-      A.join(""),
-      Number
-    )
-  ),
-  A.reduce(0, N.add)
-);
-
-console.log(answer);
+console.log(answer(input));
